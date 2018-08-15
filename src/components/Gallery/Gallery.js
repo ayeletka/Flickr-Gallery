@@ -41,6 +41,9 @@ class Gallery extends React.Component {
           res.photos.photo.length > 0
         ) {
           this.setState({images: res.photos.photo});
+            console.log(res.photos.photo[0])
+            console.log(res.photos.photo[1])
+
         }
       });
   }
@@ -56,11 +59,25 @@ class Gallery extends React.Component {
     this.getImages(props.tag);
   }
 
+
+  cloneCallBack = (dto) => {
+    // console.log(dto.id)
+    var tmp = [];
+    tmp = this.state.images;
+    console.log(tmp)
+
+    var tmp_dto = dto;
+    tmp_dto.id = "copy" +dto.id
+    tmp.push(tmp_dto);
+    // console.log(tmp)
+    this.setState({images: tmp});
+  }
+
   render() {
     return (
       <div className="gallery-root">
         {this.state.images.map(dto => {
-          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth}/>;
+          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth} callback={this.cloneCallBack}/>;
         })}
       </div>
     );
